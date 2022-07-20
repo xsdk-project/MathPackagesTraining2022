@@ -30,6 +30,10 @@ header:
 
 ## Setup Instructions For AMReX Tutorials
 
+TBD
+
+<!--
+
 Vis can be finicky on Cooley because there are certain details that we need to set up first:
 
 - Access Cooley with `ssh -X`
@@ -60,16 +64,39 @@ source /grand/projects/ATPESC2021/EXAMPLES/track-5-numerical/amrex/source_this_f
 
 |
 
+-->
+
+
 ## Example: AMR101: Multi-Level Scalar Advection
 
 ---
 
+Consider
+
+|![drop](drop_small.gif){: width="500"}|
+|:--:|
+| https://www.youtube.com/watch?v=KiBrKzykwO8 |
+
+
+
+We want to develop a fluid simulation that captures the behavior seen in this experiment.
+First, we began with a simplified problem, 2D flow around a cylinder.
+  
+
+We plan on doing a large and detailed simulation. Therefore we will be limited by
+computational resources and time to solution.
+We want to focus our computation on capaturing the phenomena at the water dye "boundary" and
+not on the water.
+
+<!-- Possibly move to top or remove
 ### What Features Are We Using
 
 * Mesh data
 * Dynamic AMR with and without subcycling
+* Scalable computation
+-->
 
-### The Problem
+### Mathematical Problem Formulation
 
 Consider a drop of dye (we'll define $$\phi$$ to be the concentration of dye)
 in a thin incompressible fluid that is spinning
@@ -94,7 +121,7 @@ Note that because $${\bf{u^{spec}}}$$ is defined as the curl of a scalar field, 
 In this example we'll be using AMR to resolve the scalar field since the location of the dye is
 what we care most about.
 
-### The AMR Algorithm
+### The Algorithm
 
 To update the solution in a patch at a given level, we compute fluxes ($${\bf u^{spec}} \phi$$)
 on each face, and difference the fluxes to create the update to phi.   The update routine
@@ -110,60 +137,53 @@ in the code looks like
   }
 ```
 
-In this routine we use the macro AMREX_D_TERM so that we can write dimension-independent code;
+In this routine we use the macro `AMREX_D_TERM` so that we can write dimension-independent code;
 in 3D this returns the flux differences in all three directions, but in 2D it does not include
 the z-fluxes.
 
-Knowing how to synchronize the solution at coarse/fine boundaries is essential in an AMR algorithm;
-here having the algorithm written in flux form allows us to either make the fluxes consistent between
-coarse and fine levels in a no-subcycling algorithm, or "reflux" after the update in a subcycling algorithm.
+### Adaptive Mesh Refinement
 
-The subcycling algorithm can be written as follows
+Adaptive mesh refinement focuses computation on the areas of interest.
 
-```cpp
-void
-AmrCoreAdv::timeStepWithSubcycling (int lev, Real time, int iteration)
-{
-    // Advance a single level for a single time step, and update flux registers
-    Real t_nph = 0.5 * (t_old[lev] + t_new[lev]);
-    DefineVelocityAtLevel(lev, t_nph);
-    AdvancePhiAtLevel(lev, time, dt[lev], iteration, nsubsteps[lev]);
 
-    ++istep[lev];
+Example code.
 
-    if (lev < finest_level)
-    {
-        // recursive call for next-finer level
-        for (int i = 1; i <= nsubsteps[lev+1]; ++i)
-        {
-            timeStepWithSubcycling(lev+1, time+(i-1)*dt[lev+1], i);
-        }
-        if (do_reflux)
-        {
-            // update lev based on coarse-fine flux mismatch
-            flux_reg[lev+1]->Reflux(phi_new[lev], 1.0, 0, 0, phi_new[lev].nComp(), geom[lev]);
-        }
-        AverageDownTo(lev); // average lev+1 down to lev
-    }
-}
-```
-
-while the no-subcycling algorithm looks like
 
 ```cpp
+// Make a new level using provided BoxArray and DistributionMapping and
+// fill with interpolated coarse level data.
+// overrides the pure virtual function in AmrCore
 void
-AmrCoreAdv::timeStepNoSubcycling (Real time, int iteration)
+AmrCoreAdv::MakeNewLevelFromCoarse (int lev, Real time, const BoxArray& ba,
+                    const DistributionMapping& dm)
 {
-    DefineVelocityAllLevels(time);
-    AdvancePhiAllLevels (time, dt[0], iteration);
+    const int ncomp = phi_new[lev-1].nComp();
+    const int nghost = phi_new[lev-1].nGrow();
+    
+    phi_new[lev].define(ba, dm, ncomp, nghost);
+    phi_old[lev].define(ba, dm, ncomp, nghost);
 
-    // Make sure the coarser levels are consistent with the finer levels
-    AverageDown ();
+    t_new[lev] = time;
+    t_old[lev] = time - 1.e200;
 
-    for (int lev = 0; lev <= finest_level; lev++)
-        ++istep[lev];
-}
+    // This clears the old MultiFab and allocates the new one
+    for (int idim = 0; idim < AMREX_SPACEDIM; idim++)
+    {   
+    facevel[lev][idim] = MultiFab(amrex::convert(ba,IntVect::TheDimensionVector(idim)), dm, 1, 1);
+    }   
+
+    if (lev > 0 && do_reflux) {
+    flux_reg[lev].reset(new FluxRegister(ba, dm, refRatio(lev-1), lev, ncomp));
+    }   
+
+    FillCoarsePatch(lev, time, phi_new[lev], 0, ncomp);
+}    
 ```
+
+
+
+Knowing how to synchronize the solution at coarse/fine boundaries is essential in an AMR algorithm.
+
 
 ### Running the Code
 
@@ -235,7 +255,82 @@ Coarse STEP 8 ends. TIME = 0.007031485953 DT = 0.0008789650903 Sum(Phi) = 540755
 
 Here Sum(Phi) is the sum of $$\phi$$ over all the cells at the coarsest level.
 
-### Questions to Answer:
+
+#### Subcycling vs. No-Subcycling
+
+
+here having the algorithm written in flux form allows us to either make the fluxes consistent between
+coarse and fine levels in a no-subcycling algorithm, or "reflux" after the update in a subcycling algorithm.
+
+The subcycling algorithm can be written as follows
+
+
+```cpp
+void
+AmrCoreAdv::timeStepWithSubcycling (int lev, Real time, int iteration)
+{
+    // Advance a single level for a single time step, and update flux registers
+    Real t_nph = 0.5 * (t_old[lev] + t_new[lev]);
+    DefineVelocityAtLevel(lev, t_nph);
+    AdvancePhiAtLevel(lev, time, dt[lev], iteration, nsubsteps[lev]);
+
+    ++istep[lev];
+
+    if (lev < finest_level)
+    {
+        // recursive call for next-finer level
+        for (int i = 1; i <= nsubsteps[lev+1]; ++i)
+        {
+            timeStepWithSubcycling(lev+1, time+(i-1)*dt[lev+1], i);
+        }
+        if (do_reflux)
+        {
+            // update lev based on coarse-fine flux mismatch
+            flux_reg[lev+1]->Reflux(phi_new[lev], 1.0, 0, 0, phi_new[lev].nComp(), geom[lev]);
+        }
+        AverageDownTo(lev); // average lev+1 down to lev
+    }
+}
+```
+
+
+while the no-subcycling algorithm looks like
+
+```cpp
+void
+AmrCoreAdv::timeStepNoSubcycling (Real time, int iteration)
+{
+    DefineVelocityAllLevels(time);
+    AdvancePhiAllLevels (time, dt[0], iteration);
+
+    // Make sure the coarser levels are consistent with the finer levels
+    AverageDown ();
+
+    for (int lev = 0; lev <= finest_level; lev++)
+        ++istep[lev];
+}
+```
+
+
+### Key Observations:
+
+1. How do runtimes compare when different numbers of MPI Ranks are used?
+   
+   
+<details>
+  Run times quickly decrease with the number of MPI Ranks, demonstrating
+  good scaling. Furthermore, as the number of ranks gets above 64,
+  the amout of decrese slows down.
+  
+  This can be due to a number of reasons, such as communication cost, or
+  not enough work for each rank. In this case, its likely the former.
+  
+  ![Timings](AMR101RunTimes.png){: width="300"}
+</details>
+   
+
+
+
 
 1. How do the subcycling vs no-subycling calculations compare?
 
@@ -255,6 +350,11 @@ Here Sum(Phi) is the sum of $$\phi$$ over all the cells at the coarsest level.
    mpiexec -n 1 ./main3d.gnu.MPI.ex inputs_for_scaling
 
    mpiexec -n 4 ./main3d.gnu.MPI.ex inputs_for_scaling
+
+   <details>
+        Plot of timings can go here.
+        Answers go here.
+   </details>
 
 5. Why could we check conservation by just adding up the values at the coarsest level?
 
