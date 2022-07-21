@@ -63,11 +63,11 @@ permalink: "/presenters/"
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-### Alp Dener
-### Alp Dener
+### Todd Munson
+### Todd Munson
 
 |:---:|:---:|
-|![](https://www.anl.gov/sites/www/files/styles/profile_teaser_square_350px/public/Dener%20Alp%2032848D037.png?itok=rHQjqgg4){:width="200px"}|Key Expertise: [PETSc/TAO][petsc]<br><br>Affiliation: [ANL][anl]/[MCS][anl-mcs]<br><br>Contact: [email][ad-m]<br><br>Links: [Profile][ad-p] and [GitLab][ad-g]|
+|![](https://press3.mcs.anl.gov/atpesc/files/2018/07/Munson.png){:width="200px"}|Key Expertise: [PETSc/TAO][petsc]<br><br>Affiliation: [ANL][anl]/[MCS][anl-mcs]<br><br>Contact: [email][ad-m]<br><br>Links: [Profile][ad-p] and [GitLab][ad-g]|
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
