@@ -54,11 +54,11 @@ permalink: "/presenters/"
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-### Don Willcox
-### Don Willcox
+### Erik Palmer
+### Erik Palmer
 
 |:---:|:---:|
-|![](https://avatars1.githubusercontent.com/u/6532013?s=400&v=4){:width="200px"}|Key Expertise: [AMReX][amrex]<br><br>Affiliation: [LBL][lbl]/[CCSE][lbl-ccse]<br><br>Contact: [email][dw-m]<br><br>GitHub: [Profile][dw-g]|
+|![](https://avatars.githubusercontent.com/u/24531086?v=4){:width="200px"}|Key Expertise: [AMReX][amrex]<br><br>Affiliation: [LBL][lbl]/[CCSE][lbl-ccse]<br><br>Contact: [email][dw-m]<br><br>GitHub: [Profile][dw-g]|
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -67,7 +67,7 @@ permalink: "/presenters/"
 ### Alp Dener
 
 |:---:|:---:|
-|![](https://www.anl.gov/sites/www/files/styles/profile_teaser_square_350px/public/Dener%20Alp%2032848D037.png?itok=rHQjqgg4){:width="200px"}|Key Expertise: [PETSc/TAO][petsc]<br><br>Affiliation: [ANL][anl]/[MCS][anl-mcs]<br><br>Contact: [email][ad-m]<br><br>Links: [Profile][ad-p] and [GitLab][ad-g]| 
+|![](https://www.anl.gov/sites/www/files/styles/profile_teaser_square_350px/public/Dener%20Alp%2032848D037.png?itok=rHQjqgg4){:width="200px"}|Key Expertise: [PETSc/TAO][petsc]<br><br>Affiliation: [ANL][anl]/[MCS][anl-mcs]<br><br>Contact: [email][ad-m]<br><br>Links: [Profile][ad-p] and [GitLab][ad-g]|
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -307,7 +307,7 @@ permalink: "/presenters/"
 
 [lcm-g]: https://github.com/curfman
 [mcm-g]: https://github.com/markcmiller86
-[sb-g]: https://github.com/balay 
+[sb-g]: https://github.com/balay
 [dr-g]: https://github.com/drreynolds
 [aa-g]: https://github.com/asalmgren
 [dw-g]: https://github.com/dwillcox
