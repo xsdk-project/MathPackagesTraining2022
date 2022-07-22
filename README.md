@@ -16,10 +16,10 @@ install Ruby dependencies:
 bundle install
 ```
 
-Move to the MathPackagesTraining2022 directory and start the Jekyll server:
+Clone or move to the MathPackagesTraining2022 directory and start the Jekyll server:
 
 ```
-cd MathPackagesTraining2022
+git clone https://github.com/xsdk-project/MathPackagesTraining2022.git
 bundle exec jekyll serve
 ```
 
