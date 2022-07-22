@@ -148,15 +148,15 @@ their effect on the problem solution.
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-### Direct Solvers (with SuperLU/Strumpack)
-### Direct Solvers (with SuperLU/Strumpack)
+### Direct Solvers (with SuperLu/Strumpack)
+### Direct Solvers (with SuperLu/Strumpack)
 [Slides](../files/ATPESC-2021-Track-5-Talk-5-Li-Ghysels-DirectSolvers.pdf)
 
 In this lecture we discuss several aspects of direct solvers for large
 sparse linear systems. Sparse direct solvers, based on Gaussian
 elimination, are popular for a variety of applications mainly because
 of their numerical robustness and ease of use. Two software packages
-are introduced: SuperLU(_Dist) and STRUMPACK. We give a brief
+are introduced: SuperLu(_Dist) and STRUMPACK. We give a brief
 introduction to the underlying algorithms used in these solvers and
 illustrate their use.
 
@@ -172,7 +172,7 @@ approximation to construct efficient preconditioners based on
 approximate sparse LU factorization.
 
 * Session 1 (10:30am-11:30am) includes a hands-on demo session with
-SuperLU.
+SuperLu.
 * Session 2 (11:45am-12:45pm) has a hands-on demo session with STRUMPACK.
 * Session 4 (3:40pm-4:30pm) includes a Q&A session (no hands-on).
 

@@ -1,7 +1,7 @@
 ---
 layout: package
-subheadline: ATPESC 2021 Package Overviews
-title: "SuperLU"
+subheadline: ATPESC 2022 Package Overviews
+title: "SuperLu"
 teaser: "Supernodal Sparse LU Direct Solver"
 permalink: "packages/superlu/"
 use_math: true

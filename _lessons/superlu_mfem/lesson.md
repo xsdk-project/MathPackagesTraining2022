@@ -2,7 +2,7 @@
 layout: page-fullwidth
 order: 7
 subheadline: "Linear Solvers"
-title: "Sparse, Direct Solvers with SuperLU"
+title: "Sparse, Direct Solvers with SuperLu"
 teaser: "Role and Use of Direct Solvers in Ill-Conditioned Problems"
 permalink: "lessons/superlu_mfem/"
 use_math: true
@@ -265,7 +265,7 @@ Number of unknowns: 641601
     L\U :          696.35 |  Total :   744.90
 ** Total highmark (MB):
     Sum-of-all :  1447.47 | Avg :  1447.47  | Max :  1447.47
-	
+
 **************************************************
 **** Time (seconds) ****
 	EQUIL time             0.03
