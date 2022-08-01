@@ -32,7 +32,7 @@ header:
 
 TBD
 
-<!--
+{% comment %}
 
 Vis can be finicky on Cooley because there are certain details that we need to set up first:
 
@@ -64,7 +64,7 @@ source /grand/projects/ATPESC2021/EXAMPLES/track-5-numerical/amrex/source_this_f
 
 |
 
--->
+{% endcomment %}
 
 
 <br>
@@ -102,7 +102,7 @@ not on the water.
 
 
 <br>
-### Mathematical Problem Formulation
+### Mathematical Formulation
 
 Consider a drop of dye (we'll define $$\phi$$ to be the concentration of dye)
 in a thin incompressible fluid that is spinning
@@ -127,7 +127,7 @@ Note that because $${\bf{u^{spec}}}$$ is defined as the curl of a scalar field, 
 In this example we'll be using AMR to resolve the scalar field since the location of the dye is
 what we care most about.
 
-### The Algorithm
+### Algorithm
 
 To update the solution in a patch at a given level, we compute fluxes ($${\bf u^{spec}} \phi$$)
 on each face, and difference the fluxes to create the update to phi.   The update routine
@@ -148,7 +148,6 @@ in 3D this returns the flux differences in all three directions, but in 2D it do
 the z-fluxes.
 
 <br>
-### Adaptive Mesh Refinement
 
 Adaptive mesh refinement focuses computation on the areas of interest.
 
@@ -317,6 +316,12 @@ You are now ready to play the movie!  See the "VCR-like" controls at the top. Cl
 
 </details>
 
+{% comment %}
+    
+Check-in point -- make sure everyone who wants to is able to run the code, then
+transition them into doing the activities.
+
+{% endcomment %}
 
 
 <br>
@@ -327,7 +332,7 @@ Try the following:
 - Run `AMReX_Amr101` with and without adaptive mesh refinement and consider how the
   differing runs compare.
 
-- Run `AMReX_Amr101` in parallel with different amounts of MPI Ranks and compare
+- Run `AMReX_Amr101` in parallel with different numbers of MPI Ranks and compare
   results. Also try using the `inputs` input file and `inputs_for_scaling` input
   file.
 
@@ -403,7 +408,13 @@ Try the following:
 <br>
 ### Parallelism with GPUs
 
-The same AMReX code can be recompiled to use a GPU backend for some computations.
+Suppose at this point, you find you have access to GPUs. Typically, it may
+be difficult to adapt your code to take advantage of there resources. And
+while there are compatibility layers out there, the AMReX framework is
+already poised to take advantage of GPUs with very little change to the code.
+
+In our example,
+same AMReX source code can be recompiled to use a GPU backend for some computations.
 
 
 ```cpp
@@ -426,7 +437,6 @@ The same AMReX code can be recompiled to use a GPU backend for some computations
             });
         }
     }
-}
 
 ```
 
@@ -448,9 +458,36 @@ The result would be an executable named `./main3d.gnu.CUDA.MPI.ex`.
 Indeed, this is how the executable already located in the
 directory was created.
 
+{% comment %}
+People typically compare Node-to-node, so we're not going to worry about MPI+GPU.
+
+As a scientist you don't want to have to rewrite you code each time the architecture
+changes. With AMReX framework, can run on MPI, OpenMP, CUDA, Rocm, SYCL without
+changing code. -- Also don't know where you might get run time. With this kind
+of frame work, 99% code will be reusable.
+
+The same code that runs on the HPC you can debug on your laptop.
+
+{% endcomment %}
+
+
 ### Activity
 
 - Try running the GPU enabled version and compare runtimes.
+
+### Key Observations
+
+- Running on GPUs did not require changes to the code.
+
+- Running on GPUs was fast.
+
+
+
+{% comment %}
+<!-- subcycling -->
+<!-- Remove this section -- Not usually enough time for it -->
+
+
 
 <br>
 <br>
@@ -561,6 +598,10 @@ Notes:
   (You can edit these in inputs)  
 
 
+<!-- end subcycling -->
+{% endcomment %}
+
+
 <br>
 <br>
 <br>
@@ -572,6 +613,9 @@ Notes:
 - Mesh data with Embedded Boundaries
 - Linear Solvers (Multigrid)
 - Particle-Mesh Interpolation
+
+
+Lets look back, now we will add complexity  with particles and EB.
 
 
 <br>
