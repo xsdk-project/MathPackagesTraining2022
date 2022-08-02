@@ -37,7 +37,41 @@ header:
 
 ## Setup Instructions For AMReX Tutorials
 
-TBD
+
+
+1. Log into the Theta login node with your username (replace "elvis"):
+```shell
+ssh -A elvis@theta.alcf.anl.gov
+```
+
+2. In your homefolder, create a local copy of the AMReX examples:
+```shell
+cd ~
+rsync -a /grand/ATPESC2022/EXAMPLES/track-5-numerical .
+```
+
+3. To access ThetaGPU resources, transfer to a GPU service node:
+```shell
+ssh thetagpusn1 # or thetagpusn2
+```
+
+4. From the GPU service node, request a single-gpu reservation:
+```shell
+qusb -I -q single-gpu -t 60 -n 1 -A ATPESC2022
+```
+
+5. Load OpenMPI and Python.
+```shell
+module load openmpi
+module load conda
+```
+
+6. Verify the environment is set correctly.
+Now if you type, `module list`, you should see:
+
+
+
+
 
 <!--
 
