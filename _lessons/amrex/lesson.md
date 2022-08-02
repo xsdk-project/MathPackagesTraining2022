@@ -275,10 +275,15 @@ Here Sum(Phi) is the sum of $$\phi$$ over all the cells at the coarsest level.
 
 For convenience we created a python script powered by ParaView 5.9
 to render the AMReX plotfiles. FFmpeg is then used to stitch the images into a movie
-and gif. To generate a movie from the plotfiles type:
+and gif.
+
+Assuming both `pvbatch` and `ffmpeg` were added to your path when you sourced the
+`AMReX_setup.sh` file. A movie and gif of the output can be created from the plotfiles
+by typing:
+
 
 ```
-make movie3D
+pvpython paraview_amr2.py
 ```
 
 This will generate two files, `amr101_3D.avi` and `amr101_3D.gif`.
@@ -370,14 +375,14 @@ Try the following:
    |AMR101 Runtimes on Theta|
    |MPI Ranks|Total Time|
    |:-:|:-:|
-   |1  |0.1|
-   |2  |0.1|
-   |4  |0.1|
-   |8  |0.1|
-   |16 |0.1|
-   |32 |0.1|
-   |64 |0.1|
-   |128|0.1|
+   |1  |23.940|
+   |2  |12.964|
+   |4  |6.844|
+   |8  |3.764|
+   |16 |2.174|
+   |32 |1.217|
+   |64 |0.849|
+   |128|0.621|
 
     
   <details>
@@ -409,11 +414,11 @@ Try the following:
 ### Parallelism with GPUs
 
 Suppose at this point, you find you have access to GPUs. Typically, it may
-be difficult to adapt your code to take advantage of there resources. And
+be difficult to adapt your code to take advantage of these resources. And
 while there are compatibility layers out there, the AMReX framework is
 already poised to take advantage of GPUs with very little change to the code.
 
-In our example,
+In our example, the
 same AMReX source code can be recompiled to use a GPU backend for some computations.
 
 
@@ -481,12 +486,16 @@ The same code that runs on the HPC you can debug on your laptop.
 
 - Running on GPUs was fast.
 
+<details>
+  Running Amr101 with 1 MPI process and 1 GPU took 0.283s.
+</details>
+
+
 
 
 {% comment %}
-<!-- subcycling -->
-<!-- Remove this section -- Not usually enough time for it -->
-
+<!-- subcycling
+<!-- Remove this section -- Not usually enough time for it
 
 
 <br>
@@ -585,7 +594,7 @@ Notes:
 
 <!--// These direction will likely be updated.
 - You will need `+ffmpeg` in your `~/.soft.cooley` file. If you do not already have it, do `soft add +ffmpeg` and then `resoft` to load it.
--->
+
 - You can do `realpath amr101_3D.gif` to get the movie's path and then copy it to your local machine by doing `scp [username]@theta.alcf.anl.gov:[path-to-gif] .`
 
 
@@ -598,7 +607,7 @@ Notes:
   (You can edit these in inputs)  
 
 
-<!-- end subcycling -->
+-- end subcycling -->
 {% endcomment %}
 
 
