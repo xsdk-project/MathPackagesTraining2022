@@ -23,10 +23,17 @@ header:
 <!-- (Expected # minutes to complete) %% temporarily omit -->
 
 |**Questions**|**Objectives**|**Key Points**|
+|How does Adaptive Mesh Refinement (AMR) work and when would I want it?|Understand AMR applicability, benefits and trade-offs.| AMR is a flexible approach for achieving science goals.|
+|How does AMReX do AMR?|Understand AMReX provides functionality as a software framework.|Simulations are coded with AMReX data structures and functions; your science is still your code.|
+|Would AMReX be useful for my application?|Understand conceptual requirements and benefits of running with AMReX.|AMReX's AMR routines are capable of accelerating AMR, Embedded Boundaries, Particles and more on a variety of heterogeneous architectures.|
+
+
+<!--
 |What can I do with AMReX?|Understand that "AMR" means more<br>than just "traditional AMR"|AMR + EB + Particles|
 |How do I get started?|Understand easy set-up|It's not hard to get started|
 |What time-stepping do I use?|Understand the difference between subcycling and not|It's a choice|
 |How do I visualize AMR results?|Use Visit and Paraview for AMReX vis|Visualization tools exist for AMR data.|
+-->
 
 ## Setup Instructions For AMReX Tutorials
 
